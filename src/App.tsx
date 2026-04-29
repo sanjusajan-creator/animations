@@ -1,5 +1,6 @@
 import BackgroundShaders from "./components/ui/background-shaders"
 import ShaderBackground from "./components/ui/shader-background"
+import DemoOne from "./components/ui/demo"
 
 function App() {
   const params = new URLSearchParams(window.location.search)
@@ -7,6 +8,10 @@ function App() {
   
   if (bg === 'plasma') {
     return <ShaderBackground />
+  }
+  
+  if (bg === 'stripe') {
+    return <DemoOne />
   }
   
   return <BackgroundShaders />
