@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 const ShaderBackground = () => {
-  const canvasRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const vsSource = `
     attribute vec4 aVertexPosition;
@@ -123,6 +123,7 @@ const ShaderBackground = () => {
   const initShaderProgram = (gl: WebGLRenderingContext, vsSource: string, fsSource: string) => {
     const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
     const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
+    if (!vertexShader || !fragmentShader) return null;
 
     const shaderProgram = gl.createProgram();
     if (!shaderProgram) return null;
@@ -149,7 +150,10 @@ const ShaderBackground = () => {
     }
 
     const shaderProgram = initShaderProgram(gl, vsSource, fsSource);
+    if (!shaderProgram) return;
+    
     const positionBuffer = gl.createBuffer();
+    if (!positionBuffer) return;
     gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
     const positions = [
       -1.0, -1.0,
